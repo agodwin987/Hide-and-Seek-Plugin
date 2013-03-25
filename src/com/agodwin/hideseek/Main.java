@@ -26,6 +26,7 @@ public class Main extends JavaPlugin {
 	public final int[] players = new int[maxArenas];
 	public int arenaCounter = 0;
 	private Events events;
+	
 
 	@Override
 	public void onEnable() {
@@ -153,5 +154,9 @@ public class Main extends JavaPlugin {
 			}
 		}
 		return false;
+	}
+	public static Location loc(){
+		return null;
+		
 	}
 }
