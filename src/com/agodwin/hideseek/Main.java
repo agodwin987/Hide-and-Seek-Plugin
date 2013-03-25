@@ -155,7 +155,7 @@ public class Main extends JavaPlugin {
 		}
 		return false;
 	}
-	public static Location loc(){
+	public static Location loc(Player pl){
 		return null;
 		
 	}
