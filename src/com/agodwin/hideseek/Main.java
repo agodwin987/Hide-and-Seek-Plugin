@@ -16,9 +16,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
 	private String wiki = "http://pornhum.com/";
-	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED
+	public static String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED
 			+ " ";
-	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA
+	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA
 			+ " ";
 	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
 	public static int maxArenas = 100;
@@ -157,18 +157,9 @@ public class Main extends JavaPlugin {
 			}
 
 			else if (args[0].equalsIgnoreCase("leave")) {
-				for (int i = 0; i < arenaNames.length; i++) {
-					if (inArena.containsKey(p.getName())
-							&& inArena.containsValue(arenaNames[i])) {
-						inArena.remove(p.getName());
-						p.sendMessage(info + "You left the arena");
-						p.teleport(arenaLeave[i]);
-						break;
-
-					} else if (!inArena.containsKey(p.getName())) {
-						p.sendMessage(helper
-								+ "You must be in an arena to leave one!");
-						break;
+				if (inArena.containsKey(p.getName())) {
+					if (inArena.get(p.getName()).arenaInProgress()) {
+						inArena.get(p.getName()).safelyRemovePlayer(p);
 					}
 				}
 			} else if (args[0].equalsIgnoreCase("create")) {

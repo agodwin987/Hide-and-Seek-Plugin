@@ -17,6 +17,7 @@ public class Arena {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private int maxPlayers;
 	private boolean isInProgress = false;
+	private Player seeker;
 
 	public String getArenaName() {
 		return arenaName;
@@ -91,6 +92,7 @@ public class Arena {
 								new FixedMetadataValue(Main.getPlugin(),
 										"seeker"));
 						p.teleport(seekerSpawnLoc);
+						seeker = p;
 					} else {
 						p.setMetadata("team",
 								new FixedMetadataValue(Main.getPlugin(),
@@ -104,6 +106,20 @@ public class Arena {
 			}
 		}
 		isInProgress = true;
+	}
+	
+	public void safelyRemovePlayer(Player p) {
+		if (seeker.equals(p)) {
+			players.remove(p);
+			p.teleport(leaveLoc);
+			p.removeMetadata("team", Main.getPlugin());
+			seeker = null;
+		} else {
+			players.remove(p);
+			p.teleport(leaveLoc);
+			p.removeMetadata("team", Main.getPlugin());
+		}
+		p.sendMessage(Main.helper+"Safely removed from arena "+this.getArenaName()+". Thanks!");
 	}
 
 	public boolean arenaInProgress() {
