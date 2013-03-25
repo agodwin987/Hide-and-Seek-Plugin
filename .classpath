@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/Users/Alex/Downloads/PermissionsEx-1.19.5-package (1)/PermissionsEx.jar"/>
-	<classpathentry kind="lib" path="/Users/Alex/Dropbox/Public/CraftBukkit/craftbukkit.jar"/>
+	<classpathentry kind="lib" path="/Users/Jacob/Downloads/craftbukkit-1.5.1-R0.1-20130323.170600-14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

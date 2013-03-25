@@ -9,11 +9,13 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	private String wiki;
+	private String wiki = "http://pornhum.com/";
 	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED + " ";
 	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
 	public final static HashMap<String, String> inArena = new HashMap<String, String>();
@@ -26,6 +28,7 @@ public class Main extends JavaPlugin {
 	public final int[] players = new int[maxArenas];
 	public int arenaCounter = 0;
 	private Events events;
+	private static Plugin p = null;
 	
 
 	@Override
@@ -35,6 +38,7 @@ public class Main extends JavaPlugin {
 		events = new Events();
 		register();
 		getLogger().log(Level.SEVERE, "Sup, nigga bitch?");
+		p = this;
 	}
 
 	@Override
@@ -83,6 +87,7 @@ public class Main extends JavaPlugin {
 									for(Player player : Bukkit.getOnlinePlayers()){
 										if(inArena.containsKey(player.getName())){
 												player.teleport(test);
+												player.setMetadata("team", new FixedMetadataValue(this, "hider"));
 										}
 									}
 									
@@ -164,5 +169,9 @@ public class Main extends JavaPlugin {
 			}
 		}	
 		return loc;
+	}
+	
+	public static Plugin getPlugin() {
+		return p;
 	}
 }

@@ -1,5 +1,7 @@
 package com.agodwin.hideseek;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,6 +9,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 public class Events implements Listener {
 	@EventHandler
@@ -34,13 +38,14 @@ public class Events implements Listener {
 	}
 	
 	@EventHandler
-	public void playerDeathEvent(PlayerRespawnEvent e) {
+	public void playerRespawnEvent(PlayerRespawnEvent e) {
 		//set respawn,
 		//change death message
 		//set new meta
 		e.setRespawnLocation(Main.loc(e.getPlayer()));
 		if (e.getPlayer().hasMetadata("team") && !e.getPlayer().getMetadata("team").get(0).asString().equals("seeker")) {
-			
+			Bukkit.broadcastMessage(ChatColor.BLUE+e.getPlayer().getName()+ChatColor.RED+" is now a seeker! Watch out!");
+			e.getPlayer().setMetadata("team", new FixedMetadataValue(Main.getPlugin(), "seeker"));
 		}
 	}
 }
