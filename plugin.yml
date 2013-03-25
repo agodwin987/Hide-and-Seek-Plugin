@@ -1,0 +1,8 @@
+name: Hide and Seek
+main: com.agodwin.hideseek.Main
+description: Play hide and seek
+version: 1.0
+author: agodwin987
+commands:
+  hns:
+   description: main command for Hide and Seek
