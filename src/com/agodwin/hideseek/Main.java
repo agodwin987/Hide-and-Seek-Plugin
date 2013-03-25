@@ -16,8 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
 	private String wiki = "http://pornhum.com/";
-	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED + " ";
-	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
+	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED
+			+ " ";
+	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA
+			+ " ";
 	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
 	public static int maxArenas = 100;
 	public final static String[] arenaNames = new String[maxArenas];
@@ -30,7 +32,6 @@ public class Main extends JavaPlugin {
 	public int arenaCounter = 0;
 	private Events events;
 	private static Plugin p = null;
-	
 
 	@Override
 	public void onEnable() {
@@ -52,65 +53,81 @@ public class Main extends JavaPlugin {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String CommandLabel, String[] args) {
+	public boolean onCommand(CommandSender sender, Command command,
+			String CommandLabel, String[] args) {
 		Player p = (Player) sender;
 		if (CommandLabel.equalsIgnoreCase("hns")) {
 			if (args.length == 0) {
-				p.sendMessage(info + "Welcome to Hide and Seek version " + this.getDescription().getVersion());
+				p.sendMessage(info + "Welcome to Hide and Seek version "
+						+ this.getDescription().getVersion());
 				p.sendMessage(info + "Do /hns help to get basic commands");
 
 			} else if (args[0].equalsIgnoreCase("help")) {
-				p.sendMessage(ChatColor.GOLD + "****************************************************");
-				p.sendMessage(ChatColor.GREEN + "do /hns join <arena> to play Hide and Seek");
-				p.sendMessage(ChatColor.GREEN + "do /hns leave to leave Hide and Seek");
+				p.sendMessage(ChatColor.GOLD
+						+ "****************************************************");
+				p.sendMessage(ChatColor.GREEN
+						+ "do /hns join <arena> to play Hide and Seek");
+				p.sendMessage(ChatColor.GREEN
+						+ "do /hns leave to leave Hide and Seek");
 				p.sendMessage(ChatColor.GREEN + "do /hns list to see areanas");
-				p.sendMessage(ChatColor.GREEN + "Visit the Wiki here: " + ChatColor.BLUE + wiki + ChatColor.GREEN + " for more advanced commands");
-				p.sendMessage(ChatColor.GOLD + "****************************************************");
+				p.sendMessage(ChatColor.GREEN + "Visit the Wiki here: "
+						+ ChatColor.BLUE + wiki + ChatColor.GREEN
+						+ " for more advanced commands");
+				p.sendMessage(ChatColor.GOLD
+						+ "****************************************************");
 			} else if (args[0].equalsIgnoreCase("join")) {
 				if (inArena.containsKey(p.getName())) {
-					p.sendMessage(helper + "You must leave this game before you can join another!");
+					p.sendMessage(helper
+							+ "You must leave this game before you can join another!");
 				} else {
 					if (args.length == 1) {
 						p.sendMessage(helper + "Please enter an arena to join.");
 					} else {
-//						for (int i = 0; i < arenaNames.length;) {
-//							String requestedName = arenaNames[i];
-//							if (args[1].equalsIgnoreCase(requestedName)) {
-//								Location lobbyLocation = arenaLobby[i];
-//								Location test = arenaSpawnHide[i];
-//								p.teleport(lobbyLocation);
-//								p.sendMessage(info + "You chose to join: " + ChatColor.GOLD + args[1]);
-//								inArena.put(p.getName(), arenaNames[i]);
-//								players[i]++;
-//								p.sendMessage(info+"There are "+ChatColor.GOLD+players[i]+"/10"+ChatColor.AQUA+"players");
-//								if (players[i] == 2) {
-//									players[i] = 0;
-//									for(Player player : Bukkit.getOnlinePlayers()){
-//										if(inArena.containsKey(player.getName())){
-//												player.teleport(test);
-//												player.setMetadata("team", new FixedMetadataValue(this, "hider"));
-//										}
-//									}
-//									
-//									break;
-//								}
-//								break;
-//							} else {
-//								p.sendMessage(helper + "That is not a valid name");
-//								break;
-//							}
-//						}
-						
+						// for (int i = 0; i < arenaNames.length;) {
+						// String requestedName = arenaNames[i];
+						// if (args[1].equalsIgnoreCase(requestedName)) {
+						// Location lobbyLocation = arenaLobby[i];
+						// Location test = arenaSpawnHide[i];
+						// p.teleport(lobbyLocation);
+						// p.sendMessage(info + "You chose to join: " +
+						// ChatColor.GOLD + args[1]);
+						// inArena.put(p.getName(), arenaNames[i]);
+						// players[i]++;
+						// p.sendMessage(info+"There are "+ChatColor.GOLD+players[i]+"/10"+ChatColor.AQUA+"players");
+						// if (players[i] == 2) {
+						// players[i] = 0;
+						// for(Player player : Bukkit.getOnlinePlayers()){
+						// if(inArena.containsKey(player.getName())){
+						// player.teleport(test);
+						// player.setMetadata("team", new
+						// FixedMetadataValue(this, "hider"));
+						// }
+						// }
+						//
+						// break;
+						// }
+						// break;
+						// } else {
+						// p.sendMessage(helper + "That is not a valid name");
+						// break;
+						// }
+						// }
+
 						if (arenas.containsKey(args[1])) {
-							//put them in the arena
+							// put them in the arena
 							Arena joining = arenas.get(args[1]);
 							joining.addPlayer(p);
 							inArena.put(p.getName(), joining);
 							p.teleport(joining.getLobbyLocation());
-							p.sendMessage(info + "You chose to join: " + ChatColor.GOLD + joining.getArenaName());
-							p.sendMessage(info+"There are "+ChatColor.GOLD+joining.getNumPlayers()+"/"+joining.getMaxPlayers()+ChatColor.AQUA+" players");
+							p.sendMessage(info + "You chose to join: "
+									+ ChatColor.GOLD + joining.getArenaName());
+							p.sendMessage(info + "There are " + ChatColor.GOLD
+									+ joining.getNumPlayers() + "/"
+									+ joining.getMaxPlayers() + ChatColor.AQUA
+									+ " players");
 						} else {
-							p.sendMessage(helper + "That is not a valid arena name. Please try again.");
+							p.sendMessage(helper
+									+ "That is not a valid arena name. Please try again.");
 						}
 
 					}
@@ -121,34 +138,48 @@ public class Main extends JavaPlugin {
 					message += arenaNames[i] + ", ";
 				}
 				p.sendMessage(info + message);
-			} 
+			}
 
 			else if (args[0].equalsIgnoreCase("leave")) {
-				for(int i = 0; i < arenaNames.length; i++){
-				if (inArena.containsKey(p.getName())&&inArena.containsValue(arenaNames[i])) {
-					inArena.remove(p.getName());
-					p.sendMessage(info + "You left the arena");
-					p.teleport(arenaLeave[i]);
-					break;
-				
-				} else if (!inArena.containsKey(p.getName())) {
-					p.sendMessage(helper + "You must be in an arena to leave one!");
-					break;
+				for (int i = 0; i < arenaNames.length; i++) {
+					if (inArena.containsKey(p.getName())
+							&& inArena.containsValue(arenaNames[i])) {
+						inArena.remove(p.getName());
+						p.sendMessage(info + "You left the arena");
+						p.teleport(arenaLeave[i]);
+						break;
+
+					} else if (!inArena.containsKey(p.getName())) {
+						p.sendMessage(helper
+								+ "You must be in an arena to leave one!");
+						break;
+					}
 				}
-			}
 			} else if (args[0].equalsIgnoreCase("create")) {
 				if (args.length == 1) {
 					p.sendMessage(helper + "You must enter an arena name!");
 				} else if (!(arenaCounter > maxArenas)) {
-					p.sendMessage(info + "You created an arena with the name: " + ChatColor.GOLD + args[1]);
-					p.sendMessage(info + "To setup " +ChatColor.GOLD+ args[1] + ChatColor.AQUA+ ", Enter the commands " + ChatColor.RED + "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
+					p.sendMessage(info + "You created an arena with the name: "
+							+ ChatColor.GOLD + args[1]);
+					p.sendMessage(info
+							+ "To setup "
+							+ ChatColor.GOLD
+							+ args[1]
+							+ ChatColor.AQUA
+							+ ", Enter the commands "
+							+ ChatColor.RED
+							+ "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
 					arenaNames[arenaCounter] = args[1];
 				} else {
-					p.sendMessage(helper + "You have reached the maximum number of arenas, this can be change in your config file.");
+					p.sendMessage(helper
+							+ "You have reached the maximum number of arenas, this can be change in your config file.");
 				}
 			} else if (args[0].equalsIgnoreCase("markpoint")) {
 				if (args.length == 1) {
-					p.sendMessage(helper + "Try like this: " + ChatColor.RED + "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
+					p.sendMessage(helper
+							+ "Try like this: "
+							+ ChatColor.RED
+							+ "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
 				} else if (args[1].equalsIgnoreCase("lobby")) {
 					p.sendMessage(info + "You marked the lobby location");
 					arenaLobby[arenaCounter] = p.getLocation();
@@ -173,17 +204,18 @@ public class Main extends JavaPlugin {
 		}
 		return false;
 	}
-	public static Location loc(Player pl){
+
+	public static Location loc(Player pl) {
 		Location loc = null;
-		for(int i = 0; i < arenaNames.length; i++){
-			if(inArena.containsKey(pl)&&inArena.containsValue(arenaNames[i])){
+		for (int i = 0; i < arenaNames.length; i++) {
+			if (inArena.containsKey(pl) && inArena.containsValue(arenaNames[i])) {
 				loc = arenaSpawnSeek[i];
 				break;
 			}
-		}	
+		}
 		return loc;
 	}
-	
+
 	public static Plugin getPlugin() {
 		return p;
 	}
