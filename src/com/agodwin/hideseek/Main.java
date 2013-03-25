@@ -17,10 +17,10 @@ public class Main extends JavaPlugin {
 	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED + " ";
 	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
 	public final static HashMap<String, String> inArena = new HashMap<String, String>();
-	public int maxArenas = 100;
-	public final String[] arenaNames = new String[maxArenas];
+	public static int maxArenas = 100;
+	public final static String[] arenaNames = new String[maxArenas];
 	public final Location[] arenaLobby = new Location[maxArenas];
-	public final Location[] arenaSpawnSeek = new Location[maxArenas];
+	public final static Location[] arenaSpawnSeek = new Location[maxArenas];
 	public final Location[] arenaSpawnHide = new Location[maxArenas];
 	public final Location[] arenaLeave = new Location[maxArenas];
 	public final int[] players = new int[maxArenas];
@@ -156,7 +156,13 @@ public class Main extends JavaPlugin {
 		return false;
 	}
 	public static Location loc(Player pl){
-		return null;
-		
+		Location loc = null;
+		for(int i = 0; i < arenaNames.length; i++){
+			if(inArena.containsKey(pl)&&inArena.containsValue(arenaNames[i])){
+				loc = arenaSpawnSeek[i];
+				break;
+			}
+		}	
+		return loc;
 	}
 }
