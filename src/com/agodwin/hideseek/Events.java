@@ -38,7 +38,7 @@ public class Events implements Listener {
 		//set respawn,
 		//change death message
 		//set new meta
-		e.setRespawnLocation(null);
+		e.setRespawnLocation(Main.loc(e.getPlayer()));
 		if (e.getPlayer().hasMetadata("team") && !e.getPlayer().getMetadata("team").get(0).asString().equals("seeker")) {
 			
 		}
