@@ -73,4 +73,8 @@ public class Arena {
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
+	
+	public void startArena() {
+		
+	}
 }
