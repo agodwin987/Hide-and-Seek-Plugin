@@ -125,9 +125,17 @@ public class Main extends JavaPlugin {
 									+ joining.getNumPlayers() + "/"
 									+ joining.getMaxPlayers() + ChatColor.AQUA
 									+ " players");
+							if (joining.getNumPlayers() >= 2) {
+								
+							}
 						} else {
 							p.sendMessage(helper
 									+ "That is not a valid arena name. Please try again.");
+							for (String name : arenas.keySet()) {
+								if (Utils.similar(name, args[1]) > .8D) {
+									p.sendMessage("You may have ment: "+name+".");
+								}
+							}
 						}
 
 					}

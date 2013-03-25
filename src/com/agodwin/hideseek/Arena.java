@@ -1,9 +1,12 @@
 package com.agodwin.hideseek;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class Arena {
 	private String arenaName;
@@ -13,6 +16,7 @@ public class Arena {
 	private Location lobbyLocation;
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private int maxPlayers;
+	private boolean isInProgress = false;
 
 	public String getArenaName() {
 		return arenaName;
@@ -53,7 +57,7 @@ public class Arena {
 	public void addPlayer(Player p) {
 		this.players.add(p);
 	}
-	
+
 	public int getNumPlayers() {
 		return this.players.size();
 	}
@@ -73,8 +77,38 @@ public class Arena {
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
-	
+
 	public void startArena() {
-		
+		shuffleTeam();
+		Random r = new Random();
+		int rand = r.nextInt(players.size());
+		if (players.size() > 0) {
+			int count = 0;
+			for (Player p : players) {
+				if (p != null) {
+					if (rand == count) {
+						p.setMetadata("team",
+								new FixedMetadataValue(Main.getPlugin(),
+										"seeker"));
+						p.teleport(seekerSpawnLoc);
+					} else {
+						p.setMetadata("team",
+								new FixedMetadataValue(Main.getPlugin(),
+										"hider"));
+						p.teleport(hiderSpawnLoc);
+					}
+				}
+				count++;
+			}
+		}
+		isInProgress = true;
+	}
+
+	public boolean arenaInProgress() {
+		return isInProgress;
+	}
+
+	private void shuffleTeam() {
+		Collections.shuffle(this.players);
 	}
 }
