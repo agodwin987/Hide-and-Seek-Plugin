@@ -7,6 +7,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class Events implements Listener {
 	@EventHandler
@@ -25,7 +26,7 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent e) {
-		if (e.getDamager().getMetadata("team").get(0).asString().equals("seeker")
+		if (e.getDamager().hasMetadata("team") && e.getEntity().hasMetadata("team") && e.getDamager().getMetadata("team").get(0).asString().equals("seeker")
 				&& e.getDamager() instanceof Player && !e.getEntity().getMetadata("team").get(0).asString().equals("seeker") && e.getEntity() instanceof Player) {
 			//switch that team motha fucka
 			Player killed = (Player)e.getEntity();
@@ -34,6 +35,13 @@ public class Events implements Listener {
 	}
 	
 	@EventHandler
-	public void playerDeathEvent(PlayerDeathEvent e) {
+	public void playerDeathEvent(PlayerRespawnEvent e) {
+		//set respawn,
+		//change death message
+		//set new meta
+		e.setRespawnLocation(null);
+		if (e.getPlayer().hasMetadata("team") && !e.getPlayer().getMetadata("team").get(0).asString().equals("seeker")) {
+			
+		}
 	}
 }
