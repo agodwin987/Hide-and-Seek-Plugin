@@ -14,16 +14,19 @@ public class Events implements Listener {
 			e.setCancelled(true);
 		}
 	}
+
 	@EventHandler
-	public void onPlace(BlockPlaceEvent e){
-		if (Main.inArena.containsKey(e.getPlayer().getName())){
+	public void onPlace(BlockPlaceEvent e) {
+		if (Main.inArena.containsKey(e.getPlayer().getName())) {
 			e.setCancelled(true);
 		}
 	}
+
 	@EventHandler
-	public void onHit(EntityDamageByEntityEvent e){
-		if(e.getDamager().hasMetadata("seek")&&e.getDamager() instanceof Player){
-			e.getEntity().setMetadata("seek", null);
+	public void onHit(EntityDamageByEntityEvent e) {
+		if (e.getDamager().getMetadata("team").get(0).asString().equals("seeker")
+				&& e.getDamager() instanceof Player && !e.getEntity().getMetadata("team").get(0).asString().equals("seeker") && e.getEntity() instanceof Player) {
+			//switch that team motha fucka
 			
 		}
 	}
