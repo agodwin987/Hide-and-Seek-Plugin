@@ -18,7 +18,7 @@ public class Main extends JavaPlugin {
 	private String wiki = "http://pornhum.com/";
 	private String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED + " ";
 	protected String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
-	public final static HashMap<String, String> inArena = new HashMap<String, String>();
+	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
 	public static int maxArenas = 100;
 	public final static String[] arenaNames = new String[maxArenas];
 	public final Location[] arenaLobby = new Location[maxArenas];
@@ -26,6 +26,7 @@ public class Main extends JavaPlugin {
 	public final Location[] arenaSpawnHide = new Location[maxArenas];
 	public final Location[] arenaLeave = new Location[maxArenas];
 	public final int[] players = new int[maxArenas];
+	private HashMap<String, Arena> arenas = new HashMap<String, Arena>();
 	public int arenaCounter = 0;
 	private Events events;
 	private static Plugin p = null;
@@ -72,32 +73,44 @@ public class Main extends JavaPlugin {
 					if (args.length == 1) {
 						p.sendMessage(helper + "Please enter an arena to join.");
 					} else {
-						for (int i = 0; i < arenaNames.length;) {
-							String requestedName = arenaNames[i];
-							if (args[1].equalsIgnoreCase(requestedName)) {
-								Location lobbyLocation = arenaLobby[i];
-								Location test = arenaSpawnHide[i];
-								p.teleport(lobbyLocation);
-								p.sendMessage(info + "You chose to join: " + ChatColor.GOLD + args[1]);
-								inArena.put(p.getName(), arenaNames[i]);
-								players[i]++;
-								p.sendMessage(info+"There are "+ChatColor.GOLD+players[i]+"/10"+ChatColor.AQUA+"players");
-								if (players[i] == 2) {
-									players[i] = 0;
-									for(Player player : Bukkit.getOnlinePlayers()){
-										if(inArena.containsKey(player.getName())){
-												player.teleport(test);
-												player.setMetadata("team", new FixedMetadataValue(this, "hider"));
-										}
-									}
-									
-									break;
-								}
-								break;
-							} else {
-								p.sendMessage(helper + "That is not a valid name");
-								break;
-							}
+//						for (int i = 0; i < arenaNames.length;) {
+//							String requestedName = arenaNames[i];
+//							if (args[1].equalsIgnoreCase(requestedName)) {
+//								Location lobbyLocation = arenaLobby[i];
+//								Location test = arenaSpawnHide[i];
+//								p.teleport(lobbyLocation);
+//								p.sendMessage(info + "You chose to join: " + ChatColor.GOLD + args[1]);
+//								inArena.put(p.getName(), arenaNames[i]);
+//								players[i]++;
+//								p.sendMessage(info+"There are "+ChatColor.GOLD+players[i]+"/10"+ChatColor.AQUA+"players");
+//								if (players[i] == 2) {
+//									players[i] = 0;
+//									for(Player player : Bukkit.getOnlinePlayers()){
+//										if(inArena.containsKey(player.getName())){
+//												player.teleport(test);
+//												player.setMetadata("team", new FixedMetadataValue(this, "hider"));
+//										}
+//									}
+//									
+//									break;
+//								}
+//								break;
+//							} else {
+//								p.sendMessage(helper + "That is not a valid name");
+//								break;
+//							}
+//						}
+						
+						if (arenas.containsKey(args[1])) {
+							//put them in the arena
+							Arena joining = arenas.get(args[1]);
+							joining.addPlayer(p);
+							inArena.put(p.getName(), joining);
+							p.teleport(joining.getLobbyLocation());
+							p.sendMessage(info + "You chose to join: " + ChatColor.GOLD + joining.getArenaName());
+							p.sendMessage(info+"There are "+ChatColor.GOLD+joining.getNumPlayers()+"/"+joining.getMaxPlayers()+ChatColor.AQUA+" players");
+						} else {
+							p.sendMessage(helper + "That is not a valid arena name. Please try again.");
 						}
 
 					}
