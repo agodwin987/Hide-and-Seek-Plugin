@@ -33,7 +33,7 @@ public class Events implements Listener {
 				&& e.getDamager() instanceof Player && !e.getEntity().getMetadata("team").get(0).asString().equals("seeker") && e.getEntity() instanceof Player) {
 			//switch that team motha fucka
 			Player killed = (Player)e.getEntity();
-			killed.damage(Integer.MAX_VALUE);
+			killed.setHealth(0);
 		}
 	}
 	
