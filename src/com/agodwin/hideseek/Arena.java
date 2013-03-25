@@ -97,6 +97,8 @@ public class Arena {
 										"hider"));
 						p.teleport(hiderSpawnLoc);
 					}
+				} else {
+					players.remove(p);
 				}
 				count++;
 			}

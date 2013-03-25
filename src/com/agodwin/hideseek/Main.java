@@ -116,24 +116,32 @@ public class Main extends JavaPlugin {
 						if (arenas.containsKey(args[1])) {
 							// put them in the arena
 							Arena joining = arenas.get(args[1]);
-							joining.addPlayer(p);
-							inArena.put(p.getName(), joining);
-							p.teleport(joining.getLobbyLocation());
-							p.sendMessage(info + "You chose to join: "
-									+ ChatColor.GOLD + joining.getArenaName());
-							p.sendMessage(info + "There are " + ChatColor.GOLD
-									+ joining.getNumPlayers() + "/"
-									+ joining.getMaxPlayers() + ChatColor.AQUA
-									+ " players");
-							if (joining.getNumPlayers() >= 2) {
-								
+							if (!joining.arenaInProgress()) {
+								joining.addPlayer(p);
+								inArena.put(p.getName(), joining);
+								p.teleport(joining.getLobbyLocation());
+								p.sendMessage(info + "You chose to join: "
+										+ ChatColor.GOLD
+										+ joining.getArenaName());
+								p.sendMessage(info + "There are "
+										+ ChatColor.GOLD
+										+ joining.getNumPlayers() + "/"
+										+ joining.getMaxPlayers()
+										+ ChatColor.AQUA + " players");
+								if (joining.getNumPlayers() >= 2) {
+									joining.startArena();
+								}
+							} else {
+								p.sendMessage(helper
+										+ "That arena is in progress. Please try another arena or wait for the game to finish.");
 							}
 						} else {
 							p.sendMessage(helper
 									+ "That is not a valid arena name. Please try again.");
 							for (String name : arenas.keySet()) {
 								if (Utils.similar(name, args[1]) > .8D) {
-									p.sendMessage("You may have ment: "+name+".");
+									p.sendMessage("You may have meant: " + name
+											+ ".");
 								}
 							}
 						}
@@ -142,10 +150,10 @@ public class Main extends JavaPlugin {
 				}
 			} else if (args[0].equalsIgnoreCase("list")) {
 				String message = "";
-				for (int i = 0; i < arenaCounter; i++) {
-					message += arenaNames[i] + ", ";
+				for (String name : arenas.keySet()) {
+					message += name + ", ";
 				}
-				p.sendMessage(info + message);
+				p.sendMessage(info + message.substring(0, message.lastIndexOf((int)',')));
 			}
 
 			else if (args[0].equalsIgnoreCase("leave")) {
