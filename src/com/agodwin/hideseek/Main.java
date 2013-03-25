@@ -1,6 +1,7 @@
 package com.agodwin.hideseek;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin {
 		saveConfig();
 		events = new Events();
 		register();
+		getLogger().log(Level.SEVERE, "Sup, nigga bitch?");
 	}
 
 	@Override
