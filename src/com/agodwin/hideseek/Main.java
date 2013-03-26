@@ -16,10 +16,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
 	private String wiki = "http://pornhum.com/";
-	public static String helper = ChatColor.GOLD + "[H&S Helper]" + ChatColor.RED
-			+ " ";
-	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA
-			+ " ";
+	public static String helper = ChatColor.GOLD + "[H&S Helper]"
+			+ ChatColor.RED + " ";
+	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
 	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
 	public static int maxArenas = 100;
 	public final static String[] arenaNames = new String[maxArenas];
@@ -153,7 +152,8 @@ public class Main extends JavaPlugin {
 				for (String name : arenas.keySet()) {
 					message += name + ", ";
 				}
-				p.sendMessage(info + message.substring(0, message.lastIndexOf((int)',')));
+				p.sendMessage(info
+						+ message.substring(0, message.lastIndexOf((int) ',')));
 			}
 
 			else if (args[0].equalsIgnoreCase("leave")) {
@@ -165,7 +165,7 @@ public class Main extends JavaPlugin {
 			} else if (args[0].equalsIgnoreCase("create")) {
 				if (args.length == 1) {
 					p.sendMessage(helper + "You must enter an arena name!");
-				} else if (!(arenaCounter > maxArenas)) {
+				} else if (args.length == 2) {
 					p.sendMessage(info + "You created an arena with the name: "
 							+ ChatColor.GOLD + args[1]);
 					p.sendMessage(info
@@ -175,33 +175,52 @@ public class Main extends JavaPlugin {
 							+ ChatColor.AQUA
 							+ ", Enter the commands "
 							+ ChatColor.RED
-							+ "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
-					arenaNames[arenaCounter] = args[1];
+							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
+					arenas.put(args[1], new Arena(args[1]));
 				} else {
 					p.sendMessage(helper
-							+ "You have reached the maximum number of arenas, this can be change in your config file.");
+							+ "You have entered the command incorrectly. You are a dumb shit.");
 				}
 			} else if (args[0].equalsIgnoreCase("markpoint")) {
-				if (args.length == 1) {
+				if (args.length != 3) {
 					p.sendMessage(helper
 							+ "Try like this: "
 							+ ChatColor.RED
-							+ "/hns markpoint <lobby, hidespawn, seekspawn, leave>");
-				} else if (args[1].equalsIgnoreCase("lobby")) {
+							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
+					return false;
+				}
+				
+				String arg = args[2];
+				String arenaName = args[1];
+				
+				if (!arenas.containsKey(args[1])) {
+					if (arenas.containsKey(args[2])) {
+						//they switched that shit up
+						arg = args[1];
+						arenaName = args[2];
+					}
+				} else {
+					p.sendMessage(helper
+							+ "I was unable to determine the arena. \nTry like this: "
+							+ ChatColor.RED
+							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
+					return false;
+				}
+				
+				Arena a = arenas.get(arenaName);
+
+				if (arg.equalsIgnoreCase("lobby")) {
 					p.sendMessage(info + "You marked the lobby location");
-					arenaLobby[arenaCounter] = p.getLocation();
-				} else if (args[1].equalsIgnoreCase("hidespawn")) {
+					a.setLobbyLocation(p.getLocation());
+				} else if (arg.equalsIgnoreCase("hidespawn")) {
 					p.sendMessage(info + "You marked the Hider Spawn location");
-					arenaSpawnHide[arenaCounter] = p.getLocation();
-				} else if (args[1].equalsIgnoreCase("seekspawn")) {
+					a.setHiderSpawnLoc(p.getLocation());
+				} else if (arg.equalsIgnoreCase("seekspawn")) {
 					p.sendMessage(info + "You marked the Seeker Spawn location");
-					arenaSpawnSeek[arenaCounter] = p.getLocation();
-				} else if (args[1].equalsIgnoreCase("leave")) {
+					a.setSeekerSpawnLoc(p.getLocation());
+				} else if (arg.equalsIgnoreCase("leave")) {
 					p.sendMessage(info + "You marked the Leave location");
-					arenaLeave[arenaCounter] = p.getLocation();
-				} else if (args[1].equalsIgnoreCase("done")) {
-					p.sendMessage(info + "You finished the arena");
-					arenaCounter++;
+					a.setLeaveLoc(p.getLocation());
 				} else {
 					p.sendMessage(helper + "Unknown argument");
 				}

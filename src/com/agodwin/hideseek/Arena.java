@@ -18,6 +18,10 @@ public class Arena {
 	private int maxPlayers;
 	private boolean isInProgress = false;
 	private Player seeker;
+	
+	public Arena (String name) {
+		arenaName = name;
+	}
 
 	public String getArenaName() {
 		return arenaName;
@@ -120,7 +124,6 @@ public class Arena {
 			p.removeMetadata("team", Main.getPlugin());
 		}
 		p.sendMessage(Main.helper+"Safely removed from arena "+this.getArenaName()+". Thanks!");
-		//ghello
 	}
 
 	public boolean arenaInProgress() {
