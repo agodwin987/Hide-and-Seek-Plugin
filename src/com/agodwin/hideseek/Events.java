@@ -29,23 +29,33 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent e) {
-		if (e.getDamager().hasMetadata("team") && e.getEntity().hasMetadata("team") && e.getDamager().getMetadata("team").get(0).asString().equals("seeker")
-				&& e.getDamager() instanceof Player && !e.getEntity().getMetadata("team").get(0).asString().equals("seeker") && e.getEntity() instanceof Player) {
-			//switch that team motha fucka
-			Player killed = (Player)e.getEntity();
+		if (e.getDamager().hasMetadata("team")
+				&& e.getEntity().hasMetadata("team")
+				&& e.getDamager().getMetadata("team").get(0).asString()
+						.equals("seeker")
+				&& e.getDamager() instanceof Player
+				&& !e.getEntity().getMetadata("team").get(0).asString()
+						.equals("seeker") && e.getEntity() instanceof Player) {
+			// switch that team motha fucka
+			Player killed = (Player) e.getEntity();
 			killed.setHealth(0);
 		}
 	}
-	
+
 	@EventHandler
 	public void playerRespawnEvent(PlayerRespawnEvent e) {
-		//set respawn,
-		//change death message
-		//set new meta
-		e.setRespawnLocation(Main.loc(e.getPlayer()));
-		if (e.getPlayer().hasMetadata("team") && !e.getPlayer().getMetadata("team").get(0).asString().equals("seeker")) {
-			Bukkit.broadcastMessage(ChatColor.BLUE+e.getPlayer().getName()+ChatColor.RED+" is now a seeker! Watch out!");
-			e.getPlayer().setMetadata("team", new FixedMetadataValue(Main.getPlugin(), "seeker"));
+		// set respawn,
+		// change death message
+		// set new meta
+		Main m = new Main();
+		e.setRespawnLocation(m.loc(e.getPlayer()));
+		if (e.getPlayer().hasMetadata("team")
+				&& !e.getPlayer().getMetadata("team").get(0).asString()
+						.equals("seeker")) {
+			Bukkit.broadcastMessage(ChatColor.BLUE + e.getPlayer().getName()
+					+ ChatColor.RED + " is now a seeker! Watch out!");
+			e.getPlayer().setMetadata("team",
+					new FixedMetadataValue(Main.getPlugin(), "seeker"));
 		}
 	}
 }

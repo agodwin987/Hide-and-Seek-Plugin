@@ -189,13 +189,13 @@ public class Main extends JavaPlugin {
 							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
 					return false;
 				}
-				
+
 				String arg = args[2];
 				String arenaName = args[1];
-				
+
 				if (!arenas.containsKey(args[1])) {
 					if (arenas.containsKey(args[2])) {
-						//they switched that shit up
+						// they switched that shit up
 						arg = args[1];
 						arenaName = args[2];
 					}
@@ -206,7 +206,7 @@ public class Main extends JavaPlugin {
 							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
 					return false;
 				}
-				
+
 				Arena a = arenas.get(arenaName);
 
 				if (arg.equalsIgnoreCase("lobby")) {
@@ -231,13 +231,11 @@ public class Main extends JavaPlugin {
 		return false;
 	}
 
-	public static Location loc(Player pl) {
+	public Location loc(Player pl) {
 		Location loc = null;
-		for (int i = 0; i < arenaNames.length; i++) {
-			if (inArena.containsKey(pl) && inArena.containsValue(arenaNames[i])) {
-				loc = arenaSpawnSeek[i];
-				break;
-			}
+		for (Arena a : arenas.values()) {
+			if (a.playerInArena(pl))
+				return a.getSeekerSpawnLoc();
 		}
 		return loc;
 	}
