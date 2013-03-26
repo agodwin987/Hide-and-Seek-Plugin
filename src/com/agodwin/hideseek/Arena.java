@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -97,6 +98,7 @@ public class Arena {
 										"seeker"));
 						p.teleport(seekerSpawnLoc);
 						seeker = p;
+						p.sendMessage("You are a seeker!");
 					} else {
 						p.setMetadata("team",
 								new FixedMetadataValue(Main.getPlugin(),
@@ -113,7 +115,10 @@ public class Arena {
 	}
 
 	public void safelyRemovePlayer(Player p) {
-		if (seeker.equals(p)) {
+		if (!players.contains(p)) {
+			p.sendMessage(Main.helper+ChatColor.RED+"Quit it you nigger.");
+		}
+		if (seeker != null && seeker.equals(p)) {
 			players.remove(p);
 			p.teleport(leaveLoc);
 			p.removeMetadata("team", Main.getPlugin());
