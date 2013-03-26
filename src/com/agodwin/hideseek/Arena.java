@@ -2,14 +2,17 @@ package com.agodwin.hideseek;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Arena {
+public class Arena implements ConfigurationSerializable {
 	private String arenaName;
 	private Location seekerSpawnLoc;
 	private Location hiderSpawnLoc;
@@ -19,6 +22,21 @@ public class Arena {
 	private int maxPlayers;
 	private boolean isInProgress = false;
 	private Player seeker;
+
+	public Arena(String arenaName, Location seekerSpawnLoc,
+			Location hiderSpawnLoc, Location leaveLoc, Location lobbyLocation,
+			ArrayList<Player> players, int maxPlayers, boolean isInProgress,
+			Player seeker) {
+		this.arenaName = arenaName;
+		this.seekerSpawnLoc = seekerSpawnLoc;
+		this.hiderSpawnLoc = hiderSpawnLoc;
+		this.leaveLoc = leaveLoc;
+		this.lobbyLocation = lobbyLocation;
+		this.players = players;
+		this.maxPlayers = maxPlayers;
+		this.isInProgress = isInProgress;
+		this.seeker = seeker;
+	}
 
 	public Arena(String name) {
 		arenaName = name;
@@ -133,6 +151,13 @@ public class Arena {
 		p.sendMessage(Main.helper + "Safely removed from arena "
 				+ this.getArenaName() + ". Thanks!");
 	}
+	
+	public void endCurrentGame () {
+		for (Player p : players) {
+			safelyRemovePlayer(p);
+		}
+		isInProgress = false;
+	}
 
 	public boolean playerInArena(Player p) {
 		return players.contains(p);
@@ -149,5 +174,16 @@ public class Arena {
 	public void broadcastMessage(String message) {
 		for (Player p : players)
 			p.sendMessage(message);
+	}
+
+	@Override
+	public Map<String, Object> serialize() {
+		Map<String, Object> m = new HashMap<String, Object>();
+		m.put("name", this.arenaName);
+		m.put("hiderSpawnLocation", new PaperLocation(this.hiderSpawnLoc).serialize());
+		m.put("seekerSpawnLocation", new PaperLocation(this.seekerSpawnLoc).serialize());
+		m.put("leaveLocation", new PaperLocation(this.leaveLoc).serialize());
+		m.put("lobbyLocation", new PaperLocation(this.lobbyLocation).serialize());
+		return m;
 	}
 }

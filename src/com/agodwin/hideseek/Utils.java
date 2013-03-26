@@ -2,6 +2,7 @@ package com.agodwin.hideseek;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Utils {
 	public static double similar(String str1, String str2) {
@@ -28,5 +29,10 @@ public class Utils {
 			col2.add(new String(s + ""));
 		col1.retainAll(col2);
 		return col1.size();
+	}
+	
+	public static Arena deserializeArena(Map<String, Object> m) {
+		String name = String.valueOf(m.get("name"));
+		return null;
 	}
 }
