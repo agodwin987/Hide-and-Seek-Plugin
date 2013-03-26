@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	private String wiki = "http://pornhum.com/";
+	private String wiki = "http://pornhub.com/";
 	public static String helper = ChatColor.GOLD + "[H&S Helper]"
 			+ ChatColor.RED + " ";
 	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
