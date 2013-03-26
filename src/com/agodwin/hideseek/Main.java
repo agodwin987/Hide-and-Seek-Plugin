@@ -18,7 +18,7 @@ public class Main extends JavaPlugin {
 			+ ChatColor.RED + " ";
 	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
 	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
-	public static int maxArenas = 100;
+	//	public static int maxArenas = 100;
 	// public final static String[] arenaNames = new String[maxArenas];
 	// public final Location[] arenaLobby = new Location[maxArenas];
 	// public final static Location[] arenaSpawnSeek = new Location[maxArenas];
@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
 	// public final Location[] arenaLeave = new Location[maxArenas];
 	// public final int[] players = new int[maxArenas];
 	private HashMap<String, Arena> arenas = new HashMap<String, Arena>();
-	public int arenaCounter = 0;
+	// public int arenaCounter = 0;
 	private Events events;
 	private static Plugin p = null;
 
@@ -232,12 +232,10 @@ public class Main extends JavaPlugin {
 	}
 
 	public Location loc(Player pl) {
-		Location loc = null;
-		for (Arena a : arenas.values()) {
-			if (a.playerInArena(pl))
-				return a.getSeekerSpawnLoc();
+		if (inArena.containsKey(pl.getName())) {
+			return inArena.get(pl.getName()).getSeekerSpawnLoc();
 		}
-		return loc;
+		return null;
 	}
 
 	public static Plugin getPlugin() {

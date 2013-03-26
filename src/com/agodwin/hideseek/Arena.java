@@ -92,6 +92,7 @@ public class Arena {
 			int count = 0;
 			for (Player p : players) {
 				if (p != null) {
+					Main.inArena.put(p.getName(), this);
 					if (rand == count) {
 						p.setMetadata("team",
 								new FixedMetadataValue(Main.getPlugin(),
@@ -115,7 +116,7 @@ public class Arena {
 	}
 
 	public void safelyRemovePlayer(Player p) {
-		if (!players.contains(p)) {
+		if (!(players.contains(p) && Main.inArena.containsKey(p.getName()))) {
 			p.sendMessage(Main.helper+ChatColor.RED+"Quit it you nigger.");
 		}
 		if (seeker != null && seeker.equals(p)) {
@@ -128,6 +129,7 @@ public class Arena {
 			p.teleport(leaveLoc);
 			p.removeMetadata("team", Main.getPlugin());
 		}
+		Main.inArena.remove(p.getName());
 		p.sendMessage(Main.helper + "Safely removed from arena "
 				+ this.getArenaName() + ". Thanks!");
 	}
@@ -142,5 +144,10 @@ public class Arena {
 
 	private void shuffleTeam() {
 		Collections.shuffle(this.players);
+	}
+	
+	public void broadcastMessage(String message) {
+		for (Player p : players)
+			p.sendMessage(message);
 	}
 }
