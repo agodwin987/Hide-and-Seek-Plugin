@@ -120,6 +120,7 @@ public class Arena {
 			p.removeMetadata("team", Main.getPlugin());
 		}
 		p.sendMessage(Main.helper+"Safely removed from arena "+this.getArenaName()+". Thanks!");
+		//ghello
 	}
 
 	public boolean arenaInProgress() {
