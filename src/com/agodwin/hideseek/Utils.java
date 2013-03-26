@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.bukkit.Location;
+
 public class Utils {
 	public static double similar(String str1, String str2) {
 		return ((double) intersect(str1, str2) / union(str1, str2));
@@ -33,6 +35,10 @@ public class Utils {
 	
 	public static Arena deserializeArena(Map<String, Object> m) {
 		String name = String.valueOf(m.get("name"));
-		return null;
+		Location seeker = PaperLocation.deserialize(String.valueOf(m.get("name")));
+		Location hider = PaperLocation.deserialize(String.valueOf(m.get("name")));
+		Location leave = PaperLocation.deserialize(String.valueOf(m.get("name")));
+		Location lobby = PaperLocation.deserialize(String.valueOf(m.get("name")));
+		return new Arena(name, seeker, hider, leave, lobby);
 	}
 }

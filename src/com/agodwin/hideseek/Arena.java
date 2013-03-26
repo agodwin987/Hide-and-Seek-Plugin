@@ -24,18 +24,12 @@ public class Arena implements ConfigurationSerializable {
 	private Player seeker;
 
 	public Arena(String arenaName, Location seekerSpawnLoc,
-			Location hiderSpawnLoc, Location leaveLoc, Location lobbyLocation,
-			ArrayList<Player> players, int maxPlayers, boolean isInProgress,
-			Player seeker) {
+			Location hiderSpawnLoc, Location leaveLoc, Location lobbyLocation) {
 		this.arenaName = arenaName;
 		this.seekerSpawnLoc = seekerSpawnLoc;
 		this.hiderSpawnLoc = hiderSpawnLoc;
 		this.leaveLoc = leaveLoc;
 		this.lobbyLocation = lobbyLocation;
-		this.players = players;
-		this.maxPlayers = maxPlayers;
-		this.isInProgress = isInProgress;
-		this.seeker = seeker;
 	}
 
 	public Arena(String name) {

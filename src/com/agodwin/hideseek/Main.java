@@ -48,8 +48,10 @@ public class Main extends JavaPlugin {
 	private void storeData() {
 		getLogger().log(Level.INFO, info+"Storing Arena Data...");
 		for (Arena a : arenas.values()) {
-			
+			getConfig().set("Arenas."+a.getArenaName(), a.serialize());
+			getLogger().log(Level.INFO, info+"Saved arena: "+a.getArenaName());
 		}
+		getLogger().log(Level.INFO, info+"Finished saving the arenas. Bye mother fucker!");
 	}
 
 	public void register() {
