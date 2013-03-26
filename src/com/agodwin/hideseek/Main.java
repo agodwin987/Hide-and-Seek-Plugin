@@ -193,18 +193,18 @@ public class Main extends JavaPlugin {
 				String arg = args[2];
 				String arenaName = args[1];
 
-				if (!arenas.containsKey(args[1])) {
-					if (arenas.containsKey(args[2])) {
+				if (!arenas.containsKey(arenaName)) {
+					if (arenas.containsKey(arg)) {
 						// they switched that shit up
 						arg = args[1];
 						arenaName = args[2];
+					} else {
+						p.sendMessage(helper
+								+ "I was unable to determine the arena. \nTry like this: "
+								+ ChatColor.RED
+								+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
+						return false;
 					}
-				} else {
-					p.sendMessage(helper
-							+ "I was unable to determine the arena. \nTry like this: "
-							+ ChatColor.RED
-							+ "/hns markpoint <arena name> <lobby, hidespawn, seekspawn, leave>");
-					return false;
 				}
 
 				Arena a = arenas.get(arenaName);
