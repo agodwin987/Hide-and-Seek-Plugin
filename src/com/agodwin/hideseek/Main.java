@@ -19,12 +19,12 @@ public class Main extends JavaPlugin {
 	public String info = ChatColor.GOLD + "[H&S info]" + ChatColor.AQUA + " ";
 	public final static HashMap<String, Arena> inArena = new HashMap<String, Arena>();
 	public static int maxArenas = 100;
-//	public final static String[] arenaNames = new String[maxArenas];
-//	public final Location[] arenaLobby = new Location[maxArenas];
-//	public final static Location[] arenaSpawnSeek = new Location[maxArenas];
-//	public final Location[] arenaSpawnHide = new Location[maxArenas];
-//	public final Location[] arenaLeave = new Location[maxArenas];
-//	public final int[] players = new int[maxArenas];
+	// public final static String[] arenaNames = new String[maxArenas];
+	// public final Location[] arenaLobby = new Location[maxArenas];
+	// public final static Location[] arenaSpawnSeek = new Location[maxArenas];
+	// public final Location[] arenaSpawnHide = new Location[maxArenas];
+	// public final Location[] arenaLeave = new Location[maxArenas];
+	// public final int[] players = new int[maxArenas];
 	private HashMap<String, Arena> arenas = new HashMap<String, Arena>();
 	public int arenaCounter = 0;
 	private Events events;
@@ -150,8 +150,10 @@ public class Main extends JavaPlugin {
 				for (String name : arenas.keySet()) {
 					message += name + ", ";
 				}
-				p.sendMessage(info
-						+ message.substring(0, message.lastIndexOf((int) ',')));
+				if (!message.isEmpty())
+					p.sendMessage(info
+							+ message.substring(0,
+									message.lastIndexOf((int) ',')));
 			}
 
 			else if (args[0].equalsIgnoreCase("leave")) {
