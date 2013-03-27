@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		storeData();
+		saveConfig();
 	}
 
 	private void storeData() {
