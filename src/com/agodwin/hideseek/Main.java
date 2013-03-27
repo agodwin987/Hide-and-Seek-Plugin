@@ -163,9 +163,9 @@ public class Main extends JavaPlugin {
 
 			else if (args[0].equalsIgnoreCase("leave")) {
 				if (inArena.containsKey(p.getName())) {
-					if (inArena.get(p.getName()).arenaInProgress()) {
 						inArena.get(p.getName()).safelyRemovePlayer(p);
-					}
+				} else {
+					p.sendMessage(helper+"You aint in no arena dumb niggah!");
 				}
 			} else if (args[0].equalsIgnoreCase("create")) {
 				if (args.length == 1) {
