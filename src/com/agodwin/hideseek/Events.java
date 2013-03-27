@@ -43,6 +43,9 @@ public class Events implements Listener {
 
 	@EventHandler
 	public void playerRespawnEvent(PlayerRespawnEvent e) {
+		if (!Main.inArena.containsKey(e.getPlayer().getName())) {
+			return;
+		}
 		// set respawn,
 		// change death message
 		// set new meta
