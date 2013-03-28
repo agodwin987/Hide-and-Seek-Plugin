@@ -38,6 +38,7 @@ public class Main extends JavaPlugin {
 		register();
 		getLogger().log(Level.SEVERE, "Sup, nigga bitch?");
 		p = this;
+		getLogger().log(Level.INFO, "Loading up the stuff. Hold on nigga bitch.");
 	}
 
 	@Override
