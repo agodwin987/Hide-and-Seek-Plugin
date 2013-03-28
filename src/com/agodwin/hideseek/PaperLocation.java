@@ -3,6 +3,7 @@ package com.agodwin.hideseek;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 
 public class PaperLocation {
 	private double x;
@@ -29,7 +30,7 @@ public class PaperLocation {
 		double z = Double.parseDouble(things[2]);
 		float pitch = Float.parseFloat(things[3]);
 		float yaw = Float.parseFloat(things[4]);
-		World w = Bukkit.getWorld(things[5]);
+		World w = Bukkit.createWorld(new WorldCreator(things[5]));
 
 		Location l = new Location(w, x, y, z, pitch, yaw);
 		return l;
