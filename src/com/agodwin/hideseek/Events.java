@@ -3,13 +3,17 @@ package com.agodwin.hideseek;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Events implements Listener {
 	@EventHandler
@@ -38,6 +42,11 @@ public class Events implements Listener {
 			// switch that team motha fucka
 			Player killed = (Player) e.getEntity();
 			killed.setHealth(0);
+		}
+		if(e.getCause() == DamageCause.PROJECTILE && e.getDamager() instanceof Snowball){
+			Player p = (Player) e.getEntity();
+			p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 1));
 		}
 	}
 
