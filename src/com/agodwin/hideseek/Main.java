@@ -1,6 +1,7 @@
 package com.agodwin.hideseek;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
@@ -44,19 +45,19 @@ public class Main extends JavaPlugin {
 		saveConfig();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void loadData() {
-		for (int i = 0; i < 30; i++) {
-			if (getConfig().contains("Arenas"))
-				getLogger()
-						.log(Level.INFO,
-								"OH SHIT NIGGERS, THERE IS ARENAS IN THE CONFIGURATION!");
-		}
+			for (String key : getConfig().getKeys(false)) {
+				Arena a = Utils.deserializeArena((Map<String, Object>) getConfig().getMapList(key).get(0));
+				getLogger().log(Level.INFO, "Deserialized: "+a.getArenaName());
+				arenas.put(a.getArenaName(), a);
+			}
 	}
 
 	private void storeData() {
 		getLogger().log(Level.INFO, info + "Storing Arena Data...");
 		for (Arena a : arenas.values()) {
-			getConfig().set("Arenas." + a.getArenaName(), a.serialize());
+			getConfig().set(a.getArenaName(), a.serialize());
 			getLogger().log(Level.INFO,
 					info + "Saved arena: " + a.getArenaName());
 		}
