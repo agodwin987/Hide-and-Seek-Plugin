@@ -34,12 +34,23 @@ public class Main extends JavaPlugin {
 		p = this;
 		getLogger().log(Level.INFO,
 				"Loading up the stuff. Hold on nigga bitch.");
+		loadData();
+		getLogger().log(Level.INFO, "Done loading up the stuff.");
 	}
 
 	@Override
 	public void onDisable() {
 		storeData();
 		saveConfig();
+	}
+
+	private void loadData() {
+		for (int i = 0; i < 30; i++) {
+			if (getConfig().contains("Arenas"))
+				getLogger()
+						.log(Level.INFO,
+								"OH SHIT NIGGERS, THERE IS ARENAS IN THE CONFIGURATION!");
+		}
 	}
 
 	private void storeData() {
