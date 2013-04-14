@@ -92,6 +92,15 @@ public class Main extends JavaPlugin {
 						+ " for more advanced commands");
 				p.sendMessage(ChatColor.GOLD
 						+ "****************************************************");
+			} else if (args[0].equalsIgnoreCase("slots")) {
+				if (args.length == 1) {
+					p.sendMessage(helper + "Please enter an arena to change.");
+				} else {
+					Arena joining = arenas.get(args[1]);
+					if (joining != null) {
+						joining.setMaxPlayers(Integer.parseInt(args[2]));
+					}
+				}
 			} else if (args[0].equalsIgnoreCase("join")) {
 				if (inArena.containsKey(p.getName())) {
 					p.sendMessage(helper
@@ -115,7 +124,7 @@ public class Main extends JavaPlugin {
 										+ joining.getNumPlayers() + "/"
 										+ joining.getMaxPlayers()
 										+ ChatColor.AQUA + " players");
-								if (joining.getNumPlayers() >= 2) {
+								if (joining.getNumPlayers() >= joining.getMaxPlayers()) {
 									joining.startArena();
 								}
 							} else {
