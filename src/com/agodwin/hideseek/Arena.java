@@ -19,6 +19,7 @@ public class Arena implements ConfigurationSerializable {
 	private Location leaveLoc;
 	private Location lobbyLocation;
 	private ArrayList<Player> players = new ArrayList<Player>();
+	public int seekers = 0;
 	private int maxPlayers;
 	private boolean isInProgress = false;
 	private Player seeker;
@@ -125,6 +126,7 @@ public class Arena implements ConfigurationSerializable {
 			}
 		}
 		isInProgress = true;
+		seekers++;
 	}
 
 	public void safelyRemovePlayer(Player p) {

@@ -43,9 +43,11 @@ public class Events implements Listener {
 			Player killed = (Player) e.getEntity();
 			killed.setHealth(0);
 		}
-		if(e.getCause() == DamageCause.PROJECTILE && e.getDamager() instanceof Snowball){
+		if (e.getCause() == DamageCause.PROJECTILE
+				&& e.getDamager() instanceof Snowball) {
 			Player p = (Player) e.getEntity();
-			p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100,
+					1));
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 1));
 		}
 	}
@@ -65,6 +67,11 @@ public class Events implements Listener {
 						.equals("seeker")) {
 			Bukkit.broadcastMessage(ChatColor.BLUE + e.getPlayer().getName()
 					+ ChatColor.RED + " is now a seeker! Watch out!");
+			if (m.inArena.get(e.getPlayer().getName()).seekers == m.inArena
+					.get(e.getPlayer().getName()).getNumPlayers()) {
+				m.inArena.get(e.getPlayer().getName()).endCurrentGame();
+			}
+			m.inArena.get(e.getPlayer().getName()).seekers++;
 			e.getPlayer().setMetadata("team",
 					new FixedMetadataValue(Main.getPlugin(), "seeker"));
 		}

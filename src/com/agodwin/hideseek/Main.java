@@ -47,11 +47,12 @@ public class Main extends JavaPlugin {
 
 	@SuppressWarnings("unchecked")
 	private void loadData() {
-			for (String key : getConfig().getKeys(false)) {
-				Arena a = Utils.deserializeArena((Map<String, Object>) getConfig().getMapList(key).get(0));
-				getLogger().log(Level.INFO, "Deserialized: "+a.getArenaName());
-				arenas.put(a.getArenaName(), a);
-			}
+		for (String key : getConfig().getKeys(false)) {
+			Arena a = Utils.deserializeArena((Map<String, Object>) getConfig()
+					.getMapList(key).get(0));
+			getLogger().log(Level.INFO, "Deserialized: " + a.getArenaName());
+			arenas.put(a.getArenaName(), a);
+		}
 	}
 
 	private void storeData() {
@@ -99,6 +100,9 @@ public class Main extends JavaPlugin {
 					Arena joining = arenas.get(args[1]);
 					if (joining != null) {
 						joining.setMaxPlayers(Integer.parseInt(args[2]));
+						p.sendMessage(helper + "Set the slots in arena "
+								+ joining.getArenaName() + " to "
+								+ Integer.parseInt(args[2]));
 					}
 				}
 			} else if (args[0].equalsIgnoreCase("join")) {
@@ -124,7 +128,8 @@ public class Main extends JavaPlugin {
 										+ joining.getNumPlayers() + "/"
 										+ joining.getMaxPlayers()
 										+ ChatColor.AQUA + " players");
-								if (joining.getNumPlayers() >= joining.getMaxPlayers()) {
+								if (joining.getNumPlayers() >= joining
+										.getMaxPlayers()) {
 									joining.startArena();
 								}
 							} else {
